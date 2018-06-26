@@ -37,6 +37,43 @@ String isbn=request.getParameter("ISBN");
      statement.executeUpdate(sql);
      out.println("Book is added successfully");
 %>
+<h3>The data are:</h3>
+<table border="1">
+    <tr>
+        <td>ISBN</td>
+        <td>Title</td>
+        <td>Author</td>
+        <td>Price</td>
+        <td>Publishers</td>
+    </tr>
+<%
+    try{
+        String result = "select * from Book";
+        boolean results = statement.execute(result);
+        if(results){
+            ResultSet rst = statement.getResultSet();
+            while(rst.next()){
+                out.println("<tr>");
+                String isb = rst.getString("ISBN");
+                String tit = rst.getString("Title");
+                String aut = rst.getString("Authors");
+                String pric = rst.getString("Price");
+                String pb = rst.getString("Publishers");
+                out.println("<td>" + isb + "</td>");
+                out.println("<td>" + tit + "</td>");
+                out.println("<td>" + aut + "</td>");
+                out.println("<td>" + pric + "</td>");
+                out.println("<td>" + pb + "</td>");
+                out.println("</tr>");
+            }
+        }
+        statement.close();
+        con.close();
+    }catch (Exception e){
+        e.printStackTrace();
+    }
+    %>
+</table>
 
 </body>
 </html>
